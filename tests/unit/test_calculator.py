@@ -3,7 +3,7 @@ Unit Tests for Calculator
 Students start with 2 passing tests, then add more
 """
 import pytest
-from src.calculator import add, divide, subtract , multiply
+from src.calculator import add, divide, subtract , multiply , power, sqrt   
 
 class TestBasicOperations:
     """Test basic arithmetic operations"""
@@ -73,5 +73,52 @@ class TestMultiplyDivide:
             divide(10, 0)
 
 
+    class TestPower:
+        """Test exponentiation (power) operation."""
 
+        def test_power_positive_numbers(self):
+            """Test raising positive numbers to positive powers."""
+            assert power(2, 3) == 8
+            assert power(5, 2) == 25
+
+        def test_power_zero_exponent(self):
+            """Test any number to the power of zero is 1."""
+            assert power(10, 0) == 1
+            assert power(-3, 0) == 1
+
+        def test_power_negative_exponent(self):
+            """Test raising numbers to negative exponents."""
+            assert power(2, -2) == 0.25
+            assert power(-2, -3) == -0.125
+
+        def test_power_input_validation(self):
+            """Test power rejects non-numeric inputs."""
+            with pytest.raises(TypeError, match="Power function requires numeric inputs"):
+                power("2", 3)
+            with pytest.raises(TypeError, match="Power function requires numeric inputs"):
+                power(2, "3")
+
+
+    class TestSqrt:
+        """Test square root operation."""
+
+        def test_sqrt_positive_numbers(self):
+            """Test square root of positive numbers."""
+            assert sqrt(4) == 2
+            assert sqrt(9) == 3
+            assert sqrt(0) == 0
+
+        def test_sqrt_float(self):
+            """Test square root of float numbers."""
+            assert sqrt(2.25) == 1.5
+
+        def test_sqrt_negative_number(self):
+            """Test square root of negative number raises ValueError."""
+            with pytest.raises(ValueError, match="Cannot take square root of negative number"):
+                sqrt(-4)
+
+        def test_sqrt_input_validation(self):
+            """Test sqrt rejects non-numeric input."""
+            with pytest.raises(TypeError, match="Square root requires a numeric input"):
+                sqrt("16")
  
